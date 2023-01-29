@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/flightgo.iml" filepath="$PROJECT_DIR$/.idea/flightgo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gontact.iml" filepath="$PROJECT_DIR$/.idea/gontact.iml" />
     </modules>
   </component>
 </project>
