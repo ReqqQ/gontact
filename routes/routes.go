@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"gontact/API/groups"
 	"gontact/API/users"
 )
 
@@ -10,6 +11,7 @@ const (
 	endpointUser          = "user/:userId"
 	endpointUserContacts  = "user/:userId/contacts"
 	endpointContactsGroup = "user/:userId/contacts/group/:groupId"
+	endpointGroupType     = "user/:userId/contacts/group/types"
 )
 
 func GetRoutes(app *fiber.App) {
@@ -23,6 +25,11 @@ func GetRoutes(app *fiber.App) {
 		userVo := users.CreateUserVO(users.GetUserParamId(c), nil)
 
 		return c.JSON(users.GetUserContacts(userVo))
+	})
+	api.Get(endpointGroupType, func(c *fiber.Ctx) error {
+		groupTypeVO := groups.GetGroupTypeVO(users.GetUserParamId(c))
+
+		return c.JSON(groups.GetUserGroupTypes(groupTypeVO))
 	})
 	api.Get(endpointContactsGroup, func(c *fiber.Ctx) error {
 		userVo := users.CreateUserVO(users.GetUserParamId(c), users.GetGroupParamId(c))
