@@ -12,6 +12,14 @@ type UsersVO struct {
 	GroupId *int
 }
 
+type UsersContactPostVO struct {
+	UserId  int
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Email   string `json:"email"`
+	Phone   string `json:"phone"`
+}
+
 type UsersContacts struct {
 	Id      int
 	UserId  int
@@ -19,7 +27,7 @@ type UsersContacts struct {
 	Surname string
 	Email   string
 	Phone   string
-	Group   GroupsModels.GroupType
+	Group   GroupsModels.GroupType `gorm:"-"`
 }
 
 func (uv UsersVO) GetId() int {
@@ -27,4 +35,24 @@ func (uv UsersVO) GetId() int {
 }
 func (uv UsersVO) GetGroupId() *int {
 	return uv.GroupId
+}
+func (r UsersContactPostVO) SetUserId(userId int) UsersContactPostVO {
+	r.UserId = userId
+
+	return r
+}
+func (r UsersContactPostVO) GetUserId() int {
+	return r.UserId
+}
+func (r UsersContactPostVO) GetName() string {
+	return r.Name
+}
+func (r UsersContactPostVO) GetSurname() string {
+	return r.Surname
+}
+func (r UsersContactPostVO) GetPhone() string {
+	return r.Phone
+}
+func (r UsersContactPostVO) GetEmail() string {
+	return r.Email
 }

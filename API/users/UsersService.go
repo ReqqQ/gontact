@@ -8,3 +8,6 @@ func GetUser(vo UserModels.UsersVO) UserModels.Users {
 func GetUserContacts(vo UserModels.UsersVO) []UserModels.UsersContacts {
 	return getDbUserContacts(vo)
 }
+func CreateUserContact(vo UserModels.UsersContactPostVO) {
+	CreateUserContactInDB(CreateUserContactStruct(vo))
+}

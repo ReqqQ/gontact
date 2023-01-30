@@ -37,3 +37,11 @@ func GetRoutes(app *fiber.App) {
 		return c.JSON(users.GetUserContacts(userVo))
 	})
 }
+func GetPostRoutes(app *fiber.App) {
+	api := app.Group(apiPrefix)
+	api.Post(endpointUserContacts, func(c *fiber.Ctx) error {
+		vo := users.CreateUserContactPostVO(users.GetUserParamId(c), c)
+		users.CreateUserContact(vo)
+		return c.JSON("")
+	})
+}
