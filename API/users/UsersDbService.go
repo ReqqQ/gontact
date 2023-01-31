@@ -36,3 +36,6 @@ func getDbUserContacts(vo UserModels.UsersVO) []UserModels.UsersContacts {
 
 	return usersContacts
 }
+func CreateUserContactInDB(contacts UserModels.UsersContacts) {
+	database.DB.Create(&contacts)
+}
