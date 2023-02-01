@@ -47,7 +47,7 @@ Simple API in GO with DDD where user can keep his contacts with groups
 | `userId`      | `int` | **Required**. |
 | `groupId`      | `int` | **Required**. |
 
-#### Get user contacts with filter on group
+# Middleware
 
 Middleware is ready accept header with token if is bad return errors.When can not find user in DB return error too. :) 
 
