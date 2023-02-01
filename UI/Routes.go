@@ -3,6 +3,7 @@ package UI
 import (
 	"github.com/gofiber/fiber/v2"
 	AppContact "gontact/App/Contact"
+	AppSecuritySecurityDTO "gontact/App/Security/DTO"
 )
 
 const (
@@ -13,8 +14,10 @@ const (
 	endpointGroupType     = "user/:userId/contacts/group/types"
 )
 
+var userTokenDTO AppSecuritySecurityDTO.TokenUserDTO
+
 func GetRoutes(app *fiber.App) {
-	api := app.Group(apiPrefix)
+	api := app.Group(apiPrefix, middleware)
 	api.Get(endpointUser, func(c *fiber.Ctx) error {
 		command := AppContact.GetUserCommand(c).Validate()
 		dto := AppContact.GetUser(command)

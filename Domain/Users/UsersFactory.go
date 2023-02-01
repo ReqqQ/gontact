@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	DomainUsersEntity "gontact/Domain/Users/Entity"
+	DomainUsersVO "gontact/Domain/Users/VO"
 )
 
 func getUserEntity(row *sql.Row) DomainUsersEntity.UsersEntity {
@@ -24,4 +25,9 @@ func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UserContacts 
 	}
 
 	return collection
+}
+func GetUserTokenVO(userToken string) DomainUsersVO.UserTokenVO {
+	return DomainUsersVO.UserTokenVO{
+		Token: userToken,
+	}
 }

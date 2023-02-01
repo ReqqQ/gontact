@@ -7,7 +7,10 @@ import (
 )
 
 func GetUser(vo DomainUsersVO.UserVO) DomainUsersEntity.UsersEntity {
-	return getUserEntity(InterfaceUsers.GetDbUser(vo))
+	return getUserEntity(InterfaceUsers.GetDbUser(vo, false))
+}
+func GetUserByToken(vo DomainUsersVO.UserTokenVO) DomainUsersEntity.UsersEntity {
+	return getUserEntity(InterfaceUsers.GetDbUser(vo, true))
 }
 func GetUserContacts(vo DomainUsersVO.UserContactVO) []DomainUsersEntity.UserContacts {
 	return getUserContactsCollection(InterfaceUsers.GetDbUserContacts(vo))
