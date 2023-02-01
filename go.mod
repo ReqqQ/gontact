@@ -11,6 +11,9 @@ require (
 	github.com/go-delve/delve v1.20.1 // indirect
 	github.com/go-delve/liner v1.2.3-0.20220127212407-d32d89dd2a5d // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
+	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gofiber/fiber/v2 v2.41.0 // indirect
 	github.com/google/go-dap v0.6.0 // indirect
@@ -21,6 +24,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
+	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
@@ -42,7 +46,9 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.starlark.net v0.0.0-20220816155156-cfacd8902214 // indirect
 	golang.org/x/arch v0.0.0-20190927153633-4e8777c89be4 // indirect
-	golang.org/x/sys v0.0.0-20220908164124-27713097b956 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.4.5 // indirect
 	gorm.io/gorm v1.24.3 // indirect
