@@ -47,13 +47,15 @@ Simple API in GO with DDD where user can keep his contacts with groups
 | `userId`      | `int` | **Required**. |
 | `groupId`      | `int` | **Required**. |
 
+#### Get user contacts with filter on group
+
+Middleware is ready accept header with token if is bad return errors.When can not find user in DB return error too. :) 
 
 ## Features
 
 - create user 
 - create contact
 - create type 
-- middleware for API Token
 
 ## Response time in postman
 [![timing.png](https://i.postimg.cc/qvh8jdj3/timing.png)](https://postimg.cc/CR0Bx9yh)
