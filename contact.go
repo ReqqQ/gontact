@@ -2,14 +2,14 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"gontact/database"
-	"gontact/routes"
+	AppDatabase "gontact/App/Database"
+	"gontact/UI"
 )
 
 func main() {
 	app := fiber.New()
-	database.Connect()
-	routes.GetRoutes(app)
-	routes.GetPostRoutes(app)
+	AppDatabase.Connect()
+	UI.GetRoutes(app)
+	UI.GetPostRoutes(app)
 	app.Listen(":3000")
 }
