@@ -3,52 +3,69 @@ package UI
 import (
 	"github.com/gofiber/fiber/v2"
 	AppContact "gontact/App/Contact"
+	"gontact/App/Response"
+	AppSecurity "gontact/App/Security"
 	AppSecuritySecurityDTO "gontact/App/Security/DTO"
 )
 
 const (
 	apiPrefix             = "/api/"
-	endpointUser          = "user/:userId"
-	endpointUserContacts  = "user/:userId/contacts"
-	endpointContactsGroup = "user/:userId/contacts/group/:groupId"
-	endpointGroupType     = "user/:userId/contacts/group/types"
+	endpointUser          = "user"
+	endpointUserContacts  = "user/contacts"
+	endpointContactsGroup = "user/contacts/group/:groupId?"
+	endpointGroupType     = "user/contacts/group/types"
 )
 
 var userTokenDTO AppSecuritySecurityDTO.TokenUserDTO
+var api fiber.Router
 
 func GetRoutes(app *fiber.App) {
-	api := app.Group(apiPrefix, middleware)
+	api = app.Group(apiPrefix, middleware)
 	api.Get(endpointUser, func(c *fiber.Ctx) error {
-		command := AppContact.GetUserCommand(c).Validate()
+		command := AppContact.GetUserCommand(userTokenDTO)
+		errors := AppSecurity.Validate(command)
+		if errors != nil {
+			return c.JSON(Response.Error(errors))
+		}
 		dto := AppContact.GetUser(command)
 
-		return c.JSON(dto)
+		return c.JSON(Response.Success(dto))
 	})
 	api.Get(endpointUserContacts, func(c *fiber.Ctx) error {
-		command := AppContact.GetUserContactCommand(c).Validate()
+		command := AppContact.GetUserContactCommand(c, userTokenDTO)
+		errors := AppSecurity.Validate(command)
+		if errors != nil {
+			return c.JSON(Response.Error(errors))
+		}
 		dtoCollection := AppContact.GetUserContacts(command)
 
-		return c.JSON(dtoCollection)
+		return c.JSON(Response.Success(dtoCollection))
 	})
 	api.Get(endpointGroupType, func(c *fiber.Ctx) error {
-		command := AppContact.GetGroupTypesCommand(c).Validate()
+		command := AppContact.GetGroupTypesCommand(userTokenDTO)
+		errors := AppSecurity.Validate(command)
+		if errors != nil {
+			return c.JSON(Response.Error(errors))
+		}
 		dtoCollection := AppContact.GetGroupTypes(command)
 
-		return c.JSON(dtoCollection)
+		return c.JSON(Response.Success(dtoCollection))
 	})
 	api.Get(endpointContactsGroup, func(c *fiber.Ctx) error {
-		command := AppContact.GetUserContactCommand(c).Validate()
+		command := AppContact.GetUserContactCommand(c, userTokenDTO)
+		errors := AppSecurity.Validate(command)
+		if errors != nil {
+			return c.JSON(Response.Error(errors))
+		}
 		dtoCollection := AppContact.GetUserContacts(command)
 
-		return c.JSON(dtoCollection)
+		return c.JSON(Response.Success(dtoCollection))
 	})
 }
-func GetPostRoutes(app *fiber.App) {
-	//api := app.Group(apiPrefix)
-	//api.Post(endpointUserContacts, func(c *fiber.Ctx) error {
-	//	vo := users.CreateUserContactPostVO(users.GetUserParamId(c), c)
-	//	users.CreateUserContact(vo)
-	//	var i interface{}
-	//	return c.JSON(i)
-	//})
+func GetPostRoutes() {
+	api.Post(endpointUserContacts, func(c *fiber.Ctx) error {
+
+		var i interface{}
+		return c.JSON(i)
+	})
 }

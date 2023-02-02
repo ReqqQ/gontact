@@ -8,30 +8,36 @@ import (
 	AppContactGetUserDTO "gontact/App/Contact/GetUser/DTO"
 	AppContactGetUserContactsCommand "gontact/App/Contact/GetUserContacts/Command"
 	AppContactGetUserContactsDTO "gontact/App/Contact/GetUserContacts/DTO"
+	AppSecuritySecurityDTO "gontact/App/Security/DTO"
 	DomainGroupTypesEntity "gontact/Domain/GroupTypes/Entity"
 	DomainGroupTypesVO "gontact/Domain/GroupTypes/VO"
 	DomainUsersEntity "gontact/Domain/Users/Entity"
 	DomainUsersVO "gontact/Domain/Users/VO"
 )
 
-func GetUserCommand(c *fiber.Ctx) AppContactGetUserCommand.UserCommand {
-	var command AppContactGetUserCommand.UserCommand
-	c.ParamsParser(&command)
+const (
+	ParamNameGroupId = "groupId"
+	EmptyString      = ""
+)
 
-	return command
+func GetUserCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetUserCommand.UserCommand {
+	return AppContactGetUserCommand.UserCommand{
+		UserId: dto.GetId(),
+	}
 }
 
-func GetUserContactCommand(c *fiber.Ctx) AppContactGetUserContactsCommand.UserContactsCommand {
+func GetUserContactCommand(c *fiber.Ctx, dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetUserContactsCommand.UserContactsCommand {
 	var command AppContactGetUserContactsCommand.UserContactsCommand
-	c.ParamsParser(&command)
+	if c.Params(ParamNameGroupId) != EmptyString {
+		c.ParamsParser(&command)
+	}
 
-	return command
+	return command.SetUserId(dto.GetId())
 }
-func GetGroupTypesCommand(c *fiber.Ctx) AppContactGetGroupTypesCommand.GroupTypesCommand {
-	var command AppContactGetGroupTypesCommand.GroupTypesCommand
-	c.ParamsParser(&command)
-
-	return command
+func GetGroupTypesCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetGroupTypesCommand.GroupTypesCommand {
+	return AppContactGetGroupTypesCommand.GroupTypesCommand{
+		UserId: dto.GetId(),
+	}
 }
 func getUserVO(command AppContactGetUserCommand.UserCommand) DomainUsersVO.UserVO {
 	return DomainUsersVO.UserVO{
@@ -58,7 +64,7 @@ func getUserDTO(entity DomainUsersEntity.UsersEntity) AppContactGetUserDTO.UserD
 }
 func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserContacts) []AppContactGetUserContactsDTO.
 	UserContactDTO {
-	var collection []AppContactGetUserContactsDTO.UserContactDTO
+	collection := []AppContactGetUserContactsDTO.UserContactDTO{}
 
 	for _, entity := range entityCollection {
 		collection = append(collection, AppContactGetUserContactsDTO.UserContactDTO{
@@ -70,10 +76,11 @@ func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserConta
 			Phone:   entity.GetPhone(),
 		})
 	}
+
 	return collection
 }
 func getGroupTypesDTOCollection(entityCollection []DomainGroupTypesEntity.GroupTypesEntity) []AppContactGetGroupTypesDTO.GroupTypesDTO {
-	var collection []AppContactGetGroupTypesDTO.GroupTypesDTO
+	collection := []AppContactGetGroupTypesDTO.GroupTypesDTO{}
 
 	for _, entity := range entityCollection {
 		collection = append(collection, AppContactGetGroupTypesDTO.GroupTypesDTO{
