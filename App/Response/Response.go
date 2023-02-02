@@ -9,3 +9,8 @@ func Error(i interface{}) AppResponseCommand.ErrorResponseStructure {
 		Errors: i,
 	}
 }
+func Success(i interface{}) AppResponseCommand.SuccessResponseStructure {
+	return AppResponseCommand.SuccessResponseStructure{
+		Data: i,
+	}
+}
