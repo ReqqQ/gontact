@@ -2,12 +2,8 @@ package AppContact
 
 import (
 	"github.com/gofiber/fiber/v2"
-	AppContactGetGroupTypesCommand "gontact/App/Contact/GetGroupTypes/Command"
-	AppContactGetGroupTypesDTO "gontact/App/Contact/GetGroupTypes/DTO"
-	AppContactGetUserCommand "gontact/App/Contact/GetUser/Commands"
-	AppContactGetUserDTO "gontact/App/Contact/GetUser/DTO"
-	AppContactGetUserContactsCommand "gontact/App/Contact/GetUserContacts/Command"
-	AppContactGetUserContactsDTO "gontact/App/Contact/GetUserContacts/DTO"
+	AppContactGetGroupTypesCommand "gontact/App/Contact/Commands"
+	AppContactGetUserContactsDTO "gontact/App/Contact/DTO"
 	AppSecuritySecurityDTO "gontact/App/Security/DTO"
 	DomainGroupTypesEntity "gontact/Domain/GroupTypes/Entity"
 	DomainGroupTypesVO "gontact/Domain/GroupTypes/VO"
@@ -20,14 +16,14 @@ const (
 	EmptyString      = ""
 )
 
-func GetUserCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetUserCommand.UserCommand {
-	return AppContactGetUserCommand.UserCommand{
+func GetUserCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetGroupTypesCommand.UserCommand {
+	return AppContactGetGroupTypesCommand.UserCommand{
 		UserId: dto.GetId(),
 	}
 }
 
-func GetUserContactCommand(c *fiber.Ctx, dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetUserContactsCommand.UserContactsCommand {
-	var command AppContactGetUserContactsCommand.UserContactsCommand
+func GetUserContactCommand(c *fiber.Ctx, dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetGroupTypesCommand.UserContactsCommand {
+	var command AppContactGetGroupTypesCommand.UserContactsCommand
 	if c.Params(ParamNameGroupId) != EmptyString {
 		c.ParamsParser(&command)
 	}
@@ -39,12 +35,12 @@ func GetGroupTypesCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGet
 		UserId: dto.GetId(),
 	}
 }
-func getUserVO(command AppContactGetUserCommand.UserCommand) DomainUsersVO.UserVO {
+func getUserVO(command AppContactGetGroupTypesCommand.UserCommand) DomainUsersVO.UserVO {
 	return DomainUsersVO.UserVO{
 		UserId: command.GetUserId(),
 	}
 }
-func getUserContactVO(command AppContactGetUserContactsCommand.UserContactsCommand) DomainUsersVO.UserContactVO {
+func getUserContactVO(command AppContactGetGroupTypesCommand.UserContactsCommand) DomainUsersVO.UserContactVO {
 	return DomainUsersVO.UserContactVO{
 		UserId:  command.GetUserId(),
 		GroupId: command.GetGroupId(),
@@ -55,15 +51,14 @@ func getGroupTypesVO(command AppContactGetGroupTypesCommand.GroupTypesCommand) D
 		UserId: command.GetUserId(),
 	}
 }
-func getUserDTO(entity DomainUsersEntity.UsersEntity) AppContactGetUserDTO.UserDTO {
-	return AppContactGetUserDTO.UserDTO{
+func getUserDTO(entity DomainUsersEntity.UsersEntity) AppContactGetUserContactsDTO.UserDTO {
+	return AppContactGetUserContactsDTO.UserDTO{
 		Id:      entity.GetId(),
 		Name:    entity.GetName(),
 		Surname: entity.GetSurname(),
 	}
 }
-func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserContacts) []AppContactGetUserContactsDTO.
-	UserContactDTO {
+func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserContacts) []AppContactGetUserContactsDTO.UserContactDTO {
 	collection := []AppContactGetUserContactsDTO.UserContactDTO{}
 
 	for _, entity := range entityCollection {
@@ -79,11 +74,11 @@ func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserConta
 
 	return collection
 }
-func getGroupTypesDTOCollection(entityCollection []DomainGroupTypesEntity.GroupTypesEntity) []AppContactGetGroupTypesDTO.GroupTypesDTO {
-	collection := []AppContactGetGroupTypesDTO.GroupTypesDTO{}
+func getGroupTypesDTOCollection(entityCollection []DomainGroupTypesEntity.GroupTypesEntity) []AppContactGetUserContactsDTO.GroupTypesDTO {
+	collection := []AppContactGetUserContactsDTO.GroupTypesDTO{}
 
 	for _, entity := range entityCollection {
-		collection = append(collection, AppContactGetGroupTypesDTO.GroupTypesDTO{
+		collection = append(collection, AppContactGetUserContactsDTO.GroupTypesDTO{
 			Id:        entity.GetId(),
 			Name:      entity.GetName(),
 			CreatedBy: entity.GetCreatedBy(),
