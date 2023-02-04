@@ -4,19 +4,18 @@ import (
 	"database/sql"
 
 	AppDatabase "gontact/App/Database"
+	DomainUsersEntity "gontact/Domain/Users/Entity"
 	DomainUsersVO "gontact/Domain/Users/VO"
+	"gorm.io/gorm"
 )
 
 const (
-	queryAnd                  = " and"
-	queryWhere                = " where"
 	searchById                = "select id,name,surname from users where id = @UserId"
 	searchByToken             = "select id,name,surname from users where token = @Token"
 	searchUserContactsByQuery = "select uc.id,uc.user_id,uc.name,uc.surname,uc.email," +
 		"uc.phone from users_contacts uc "
-	searchUserContactsByUserId  = " uc.user_id = @UserId"
-	searchUserContactsByGroupId = " cg.group_id = @GroupId"
-	searchUserContactsJoinGroup = " left join contacts_group cg on cg.user_contact_id=uc.id"
+	searchUserContactsByUserId  = "where uc.user_id = @UserId"
+	searchUserContactsByGroupId = "left join contacts_group cg on cg.user_contact_id=uc.id where cg.group_id = @GroupId and uc.user_id = @UserId"
 )
 
 func GetDbUser(vo interface{}, isToken bool) *sql.Row {
@@ -38,10 +37,15 @@ func GetDbUserContacts(vo DomainUsersVO.UserContactVO) *sql.Rows {
 func getUserContactQuery(vo DomainUsersVO.UserContactVO) string {
 	sqlQuery := searchUserContactsByQuery
 	if vo.GetGroupId() != nil {
-		sqlQuery += searchUserContactsJoinGroup + queryWhere + searchUserContactsByGroupId + queryAnd + searchUserContactsByUserId
+		sqlQuery += searchUserContactsByGroupId
 	} else {
-		sqlQuery += queryWhere + searchUserContactsByUserId
+		sqlQuery += searchUserContactsByUserId
 	}
 
 	return sqlQuery
+}
+func CreateUserContact(entity DomainUsersEntity.UsersContacts) *gorm.DB {
+	rest := AppDatabase.DB.Create(&entity)
+
+	return rest
 }

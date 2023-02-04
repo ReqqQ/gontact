@@ -14,12 +14,12 @@ func getUserEntity(row *sql.Row) DomainUsersEntity.UsersEntity {
 
 	return userEntity
 }
-func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UserContacts {
-	var collection []DomainUsersEntity.UserContacts
+func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UsersContacts {
+	var collection []DomainUsersEntity.UsersContacts
 	defer rows.Close()
 
 	for rows.Next() {
-		var userContactEntity DomainUsersEntity.UserContacts
+		var userContactEntity DomainUsersEntity.UsersContacts
 		rows.Scan(&userContactEntity.Id, &userContactEntity.UserId, &userContactEntity.Name, &userContactEntity.Surname, &userContactEntity.Email, &userContactEntity.Phone)
 		collection = append(collection, userContactEntity)
 	}

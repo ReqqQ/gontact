@@ -22,3 +22,14 @@ func GetGroupTypes(command AppContactGetGroupTypesCommand.GroupTypesCommand) []A
 
 	return getGroupTypesDTOCollection(collection)
 }
+func CreateUserContact(command AppContactGetGroupTypesCommand.CreateContactCommand) bool {
+	entity := GetUserContactEntity(command)
+	collection := DomainUsers.GetUserContacts(getUserContactVO(command))
+	if DomainUsers.IsUserContactExists(entity, collection) {
+		return false
+	}
+
+	DomainUsers.CreateUserContact(entity)
+
+	return true
+}

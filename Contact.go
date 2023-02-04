@@ -10,6 +10,6 @@ func main() {
 	app := fiber.New()
 	AppDatabase.Connect()
 	UI.GetRoutes(app)
-	UI.GetPostRoutes(app)
+	UI.GetPostRoutes()
 	app.Listen(":3000")
 }

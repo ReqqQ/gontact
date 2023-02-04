@@ -10,9 +10,6 @@ type UserContactVO struct {
 type UserTokenVO struct {
 	Token string
 }
-type UserSearchInterface interface {
-	GetToken()
-}
 
 func (r UserTokenVO) GetToken() string {
 	return r.Token

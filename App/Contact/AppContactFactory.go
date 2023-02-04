@@ -30,6 +30,24 @@ func GetUserContactCommand(c *fiber.Ctx, dto AppSecuritySecurityDTO.TokenUserDTO
 
 	return command.SetUserId(dto.GetId())
 }
+func GetCreateContactCommand(c *fiber.Ctx, dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetGroupTypesCommand.CreateContactCommand {
+	var command AppContactGetGroupTypesCommand.CreateContactCommand
+	err := c.BodyParser(&command)
+	if err != nil {
+		return AppContactGetGroupTypesCommand.CreateContactCommand{}
+	}
+
+	return command.SetUserId(dto.GetId())
+}
+func GetUserContactEntity(command AppContactGetGroupTypesCommand.CreateContactCommand) DomainUsersEntity.UsersContacts {
+	return DomainUsersEntity.UsersContacts{
+		UserId:  command.GetUserId(),
+		Name:    command.GetUserName(),
+		Surname: command.GetUserSurname(),
+		Email:   command.GetUserEmail(),
+		Phone:   command.GetUserPhone(),
+	}
+}
 func GetGroupTypesCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGetGroupTypesCommand.GroupTypesCommand {
 	return AppContactGetGroupTypesCommand.GroupTypesCommand{
 		UserId: dto.GetId(),
@@ -40,10 +58,10 @@ func getUserVO(command AppContactGetGroupTypesCommand.UserCommand) DomainUsersVO
 		UserId: command.GetUserId(),
 	}
 }
-func getUserContactVO(command AppContactGetGroupTypesCommand.UserContactsCommand) DomainUsersVO.UserContactVO {
+func getUserContactVO(commandInterface AppContactGetGroupTypesCommand.UserCommandInterface) DomainUsersVO.UserContactVO {
 	return DomainUsersVO.UserContactVO{
-		UserId:  command.GetUserId(),
-		GroupId: command.GetGroupId(),
+		UserId:  commandInterface.GetUserId(),
+		GroupId: commandInterface.GetGroupId(),
 	}
 }
 func getGroupTypesVO(command AppContactGetGroupTypesCommand.GroupTypesCommand) DomainGroupTypesVO.GroupTypesVO {
@@ -58,7 +76,8 @@ func getUserDTO(entity DomainUsersEntity.UsersEntity) AppContactGetUserContactsD
 		Surname: entity.GetSurname(),
 	}
 }
-func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UserContacts) []AppContactGetUserContactsDTO.UserContactDTO {
+func getUserContactsDTOCollection(entityCollection []DomainUsersEntity.UsersContacts) []AppContactGetUserContactsDTO.
+	UserContactDTO {
 	collection := []AppContactGetUserContactsDTO.UserContactDTO{}
 
 	for _, entity := range entityCollection {
