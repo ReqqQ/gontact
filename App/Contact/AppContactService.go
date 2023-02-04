@@ -33,3 +33,11 @@ func CreateUserContact(command AppContactGetGroupTypesCommand.CreateContactComma
 
 	return true
 }
+func CreateUser(command AppContactGetGroupTypesCommand.CreateUserCommand) bool {
+	GetUserEntity(command)
+	//collection := DomainUsers.GetUserContacts(getUserContactVO(command))
+	//if DomainUsers.IsUserContactExists(entity, collection) {
+	//	return false
+	//}
+	return true
+}

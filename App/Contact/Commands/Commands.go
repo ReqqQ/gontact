@@ -26,6 +26,28 @@ type CreateContactCommand struct {
 	Email   *string `params:"email" validate:"required,email"`
 	Phone   *string `params:"phone" validate:"required,e164"`
 }
+type CreateUserCommand struct {
+	Name     *string `params:"name" validate:"required,alpha"`
+	Email    *string `params:"email" validate:"required,email"`
+	Surname  *string `params:"surname" validate:"required,alpha"`
+	Password *string `params:"password" validate:"required,alphanumunicode"`
+}
+
+func (r CreateUserCommand) GetName() string {
+	return *r.Name
+}
+
+func (r CreateUserCommand) GetEmail() string {
+	return *r.Email
+}
+
+func (r CreateUserCommand) GetSurname() string {
+	return *r.Surname
+}
+
+func (r CreateUserCommand) GetPassword() string {
+	return *r.Password
+}
 
 func (r CreateContactCommand) GetGroupId() *int {
 	return r.GroupId
