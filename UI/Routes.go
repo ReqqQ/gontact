@@ -64,7 +64,15 @@ func GetRoutes(app *fiber.App) {
 }
 func GetPostRoutes() {
 	api.Post(endpointUserContacts, func(c *fiber.Ctx) error {
-
+		command := AppContact.GetCreateContactCommand(c, userTokenDTO)
+		errors := AppSecurity.Validate(command)
+		if errors != nil {
+			return c.JSON(Response.Error(errors))
+		}
+		isCreated := AppContact.CreateUserContact(command)
+		if !isCreated {
+			return c.JSON(Response.Error(AppContact.ErrorUserAlreadyExists()))
+		}
 		var i interface{}
 		return c.JSON(i)
 	})

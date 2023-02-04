@@ -6,7 +6,7 @@ type UsersEntity struct {
 	Surname string
 }
 
-type UserContacts struct {
+type UsersContacts struct {
 	Id      int
 	UserId  int
 	Name    string
@@ -15,22 +15,22 @@ type UserContacts struct {
 	Phone   string
 }
 
-func (r UserContacts) GetId() int {
+func (r UsersContacts) GetId() int {
 	return r.Id
 }
-func (r UserContacts) GetUserId() int {
+func (r UsersContacts) GetUserId() int {
 	return r.UserId
 }
-func (r UserContacts) GetName() string {
+func (r UsersContacts) GetName() string {
 	return r.Name
 }
-func (r UserContacts) GetSurname() string {
+func (r UsersContacts) GetSurname() string {
 	return r.Surname
 }
-func (r UserContacts) GetEmail() string {
+func (r UsersContacts) GetEmail() string {
 	return r.Email
 }
-func (r UserContacts) GetPhone() string {
+func (r UsersContacts) GetPhone() string {
 	return r.Phone
 }
 
