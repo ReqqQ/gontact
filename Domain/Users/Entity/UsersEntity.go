@@ -1,9 +1,12 @@
 package DomainUsersEntity
 
 type UsersEntity struct {
-	Id      int
-	Name    string
-	Surname string
+	Id       int
+	Email    string
+	Name     string
+	Surname  string
+	Password string
+	Token    string
 }
 
 type UsersContacts struct {

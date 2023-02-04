@@ -14,6 +14,7 @@ func getUserEntity(row *sql.Row) DomainUsersEntity.UsersEntity {
 
 	return userEntity
 }
+
 func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UsersContacts {
 	var collection []DomainUsersEntity.UsersContacts
 	defer rows.Close()
