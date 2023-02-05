@@ -9,10 +9,23 @@ import (
 
 func getUserEntity(row *sql.Row) DomainUsersEntity.UsersEntity {
 	var userEntity DomainUsersEntity.UsersEntity
-
-	row.Scan(&userEntity.Id, &userEntity.Name, &userEntity.Surname)
+	row.Scan(&userEntity.Id, &userEntity.Email, &userEntity.Name, &userEntity.Surname)
 
 	return userEntity
+}
+
+func getUsersCollection(rows *sql.Rows) []DomainUsersEntity.UsersEntity {
+	var collection []DomainUsersEntity.UsersEntity
+	defer rows.Close()
+
+	for rows.Next() {
+		var userEntity DomainUsersEntity.UsersEntity
+		rows.Scan(&userEntity.Id, &userEntity.Email, &userEntity.Name, &userEntity.Surname)
+
+		collection = append(collection, userEntity)
+	}
+
+	return collection
 }
 
 func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UsersContacts {
@@ -22,6 +35,7 @@ func getUserContactsCollection(rows *sql.Rows) []DomainUsersEntity.UsersContacts
 	for rows.Next() {
 		var userContactEntity DomainUsersEntity.UsersContacts
 		rows.Scan(&userContactEntity.Id, &userContactEntity.UserId, &userContactEntity.Name, &userContactEntity.Surname, &userContactEntity.Email, &userContactEntity.Phone)
+
 		collection = append(collection, userContactEntity)
 	}
 

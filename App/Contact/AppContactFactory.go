@@ -56,7 +56,7 @@ func GetUserContactEntity(command AppContactGetGroupTypesCommand.CreateContactCo
 		UserId:  command.GetUserId(),
 		Name:    command.GetUserName(),
 		Surname: command.GetUserSurname(),
-		Email:   command.GetUserEmail(),
+		Email:   command.GetEmail(),
 		Phone:   command.GetUserPhone(),
 	}
 }
@@ -74,6 +74,7 @@ func GetGroupTypesCommand(dto AppSecuritySecurityDTO.TokenUserDTO) AppContactGet
 		UserId: dto.GetId(),
 	}
 }
+
 func getUserVO(command AppContactGetGroupTypesCommand.UserCommand) DomainUsersVO.UserVO {
 	return DomainUsersVO.UserVO{
 		UserId: command.GetUserId(),

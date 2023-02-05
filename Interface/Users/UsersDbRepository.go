@@ -9,9 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
+type SqlDB interface {
+	Scan(dest ...any)
+}
+
 const (
-	searchById                = "select id,name,surname from users where id = @UserId"
-	searchByToken             = "select id,name,surname from users where token = @Token"
+	searchById                = "select id,email,name,surname from users where id = @UserId"
+	searchAllUsers            = "select id,email,name,surname from users"
+	searchByToken             = "select id,email,name,surname from users where token = @Token"
 	searchUserContactsByQuery = "select uc.id,uc.user_id,uc.name,uc.surname,uc.email," +
 		"uc.phone from users_contacts uc "
 	searchUserContactsByUserId  = "where uc.user_id = @UserId"
@@ -20,6 +25,11 @@ const (
 
 func GetDbUser(vo interface{}, isToken bool) *sql.Row {
 	return AppDatabase.DB.Raw(getUserDbQuery(isToken), vo).Row()
+}
+func GetDbUsers() *sql.Rows {
+	rows, _ := AppDatabase.DB.Raw(searchAllUsers).Rows()
+
+	return rows
 }
 func getUserDbQuery(isToken bool) string {
 	query := searchById

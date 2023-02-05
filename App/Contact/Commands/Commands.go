@@ -65,7 +65,7 @@ func (r CreateContactCommand) GetUserSurname() string {
 	return *r.Surname
 }
 
-func (r CreateContactCommand) GetUserEmail() string {
+func (r CreateContactCommand) GetEmail() string {
 	return *r.Email
 }
 

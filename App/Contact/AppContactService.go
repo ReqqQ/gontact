@@ -25,7 +25,7 @@ func GetGroupTypes(command AppContactGetGroupTypesCommand.GroupTypesCommand) []A
 func CreateUserContact(command AppContactGetGroupTypesCommand.CreateContactCommand) bool {
 	entity := GetUserContactEntity(command)
 	collection := DomainUsers.GetUserContacts(getUserContactVO(command))
-	if DomainUsers.IsUserContactExists(entity, collection) {
+	if DomainUsers.IsEntityExists(entity, collection) {
 		return false
 	}
 
@@ -34,10 +34,10 @@ func CreateUserContact(command AppContactGetGroupTypesCommand.CreateContactComma
 	return true
 }
 func CreateUser(command AppContactGetGroupTypesCommand.CreateUserCommand) bool {
-	GetUserEntity(command)
-	//collection := DomainUsers.GetUserContacts(getUserContactVO(command))
-	//if DomainUsers.IsUserContactExists(entity, collection) {
-	//	return false
-	//}
+	entity := GetUserEntity(command)
+	collection := DomainUsers.GetUsers()
+	if DomainUsers.IsEntityExists(entity, collection) {
+		return false
+	}
 	return true
 }
